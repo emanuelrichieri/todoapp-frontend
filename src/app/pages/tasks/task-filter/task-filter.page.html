@@ -1,0 +1,43 @@
+<ion-header translucent>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button *ngIf="ios" (click)="dismiss()">Cancelar</ion-button>
+        <ion-button *ngIf="!ios" (click)="resetFilters()">Limpiar</ion-button>
+      </ion-buttons>
+  
+      <ion-title>Filtros</ion-title>
+  
+      <ion-buttons slot="end">
+        <ion-button (click)="applyFilters()" strong>Aceptar</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content class="ion-padding">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">Id</ion-label>
+        <ion-input type="number" [(ngModel)]="filters.id"></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label position="floating">Descripción</ion-label>
+          <ion-textarea type="text" [(ngModel)]="filters.description"></ion-textarea> 
+      </ion-item>
+      <ion-item> 
+        <ion-label>Estado</ion-label>
+        <ion-select [(ngModel)]="filters.status" interface="popover" placeholder="Seleccionar estado">
+          <ion-select-option value="">Todas</ion-select-option>
+          <ion-select-option value="PENDING">Pendientes</ion-select-option>
+          <ion-select-option value="RESOLVED">Resueltas</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+  
+  <ion-footer translucent *ngIf="ios">
+    <ion-toolbar>
+      <ion-buttons slot="start" (click)="resetFilters()">
+        <ion-button>Limpiar</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>

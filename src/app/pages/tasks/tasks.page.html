@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title [hidden]="showSearchBar">Tareas</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="setFilters()">
+        <span *ngIf="ios">Filtros</span>
+        <span *ngIf="!ios">
+          <ion-icon slot="icon-only" name="options"></ion-icon>
+        </span>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>  
+
+<ion-content>
+<ion-list>
+  <ion-list-header [hidden]="tasks.length  > 0">
+      No se encontraron tareas.
+  </ion-list-header>
+  <ion-item-sliding 
+      *ngFor="let task of tasks; let taskIndex = index " 
+      (ionSwipe)="setResolved(taskIndex)">
+    <ion-item>
+        <ion-label>
+            <p><span><b>#{{task.id}}</b></span> {{task.description}}</p>
+            <ion-label *ngIf="task.status == 'PENDING'" color="warning">
+              <b>Pendiente</b>
+            </ion-label>
+            <ion-label *ngIf="task.status == 'RESOLVED'" color="success">
+              <b>Resuelta </b>
+              <ion-icon name="checkmark-circle" color="success">
+              </ion-icon>
+            </ion-label>
+        </ion-label>
+        <ion-button color="dark" fill="clear" slot="end" (click)="showTask(task)">
+            <ion-icon name="create"></ion-icon>
+        </ion-button>
+    </ion-item>
+    <ion-item-options *ngIf="task.status != 'RESOLVED'" side="end">
+      <ion-item-option color="success">
+        <ion-icon name="checkmark-circle"></ion-icon>
+        Resuelta
+      </ion-item-option>
+    </ion-item-options>
+  </ion-item-sliding>
+</ion-list>
+  <ion-fab vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="addTask()">
+      <ion-icon name="add"></ion-icon>    
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+
+<ion-footer *ngIf="tasks.length > 0">
+  <ion-label slot="center" color="medium">
+      <p>Deslice hacia la izquierda sobre una tarea para marcar como resuelta.</p>
+  </ion-label>
+</ion-footer>

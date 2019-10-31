@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title *ngIf="!task.id">Agregar tarea</ion-title>
+    <ion-title *ngIf="task.id">Modificar tarea</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="task" class="ion-padding">
+  <form [formGroup]="taskForm">
+      <ion-item>
+          <ion-label position="floating">Descripción</ion-label>
+          <ion-textarea type="text" formControlName="description" [(ngModel)]="task.description" required></ion-textarea>
+      </ion-item>
+      <ion-item>
+          <ion-label>Estado</ion-label>
+          <ion-select formControlName="status" [(ngModel)]="task.status" placeholder="Seleccionar estado">
+            <ion-select-option value="PENDING">Pendiente</ion-select-option>
+            <ion-select-option value="RESOLVED">Resuelta</ion-select-option>
+          </ion-select>
+      </ion-item>
+  </form>
+  <ion-item>
+    <ion-label>Archivo</ion-label>
+    <ion-button (click)="downloadCurrentFile()">
+      <ion-label>{{ task.filename ? task.filename : 'Archivo' }}</ion-label>
+    </ion-button>
+    <input type="file" accept="*" (change)="changeListener($event)">
+  </ion-item>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+      <ion-button (click)="onAccept()" expand="block">Aceptar</ion-button>
+      <ion-button (click)="onCancel()" color="light" expand="block">Cancelar</ion-button>
+  </ion-toolbar>
+</ion-footer>
